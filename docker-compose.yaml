@@ -1,0 +1,7 @@
+services:
+  app:
+    image: spring-app
+    env_file:
+      - .env
+    ports: 
+      - "${PORT}:${PORT}"
