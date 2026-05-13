@@ -1,14 +1,16 @@
 # First build stage
-FROM maven:3.9-eclipse-temurin-17 AS builder
+FROM maven:3.6.3-jdk-8-slim AS builder
 
 # Creating directorium builder
 WORKDIR /builder
 
 # Copy all maven files 
 COPY pom.xml .
-COPY src ./src
+# Cache dependecies to make pipelin run faster later
+RUN mvn dependency:go-offline
 
-# Build jar inside docker
+# Create jars
+COPY src ./src
 RUN mvn clean package -DskipTests 
 
 #Extract layers
@@ -27,7 +29,8 @@ COPY --from=builder /builder/extracted/snapshot-dependencies/ ./
 COPY --from=builder /builder/extracted/application/ ./
 
 # We are rrunning application on port 8080
-EXPOSE 8080
+ENV PORT=8080
+EXPOSE ${PORT}
 
 # entry point of the app
 ENTRYPOINT [ "java", "org.springframework.boot.loader.JarLauncher" ]
