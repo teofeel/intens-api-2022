@@ -1,0 +1,26 @@
+name: Run tests before metgin
+on:
+    pull_request:
+        branches:
+            - master
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@3
+            - name: Setup java maven
+              uses: actions/setup-java@v4
+              with: 
+                java-version: '8'
+                distribution: 'temurin'
+                cache: 'maven'
+            - name: Build maven
+              run: mvn --batch-mode --update-snapshots verify
+            - name: Run tests
+              run: mvn test  
+            
+
+
+
+        
