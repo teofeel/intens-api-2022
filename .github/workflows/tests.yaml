@@ -19,6 +19,3 @@ jobs:
               run: chmod +x mvnw
             - name: Run tests
               run: ./mvnw test  
-              env:
-                PORT: 8080
-              
