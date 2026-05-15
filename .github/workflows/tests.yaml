@@ -1,0 +1,24 @@
+name: Run tests before metgin
+on:
+    pull_request:
+        branches:
+            - master
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Setup java maven
+              uses: actions/setup-java@v4
+              with: 
+                java-version: '8'
+                distribution: 'temurin'
+                cache: 'maven'
+            - name: Grant permission
+              run: chmod +x mvnw
+            - name: Run tests
+              run: ./mvnw test  
+              env:
+                PORT: 8080
+              
