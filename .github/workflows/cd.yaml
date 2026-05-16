@@ -22,6 +22,9 @@ jobs:
                 distribution: 'temurin'
                 cache: 'maven'
 
+            - name: Grant permission
+              run: chmod +x mvnw
+
             - name: Build with Maven
               run: ./mvnw clean package -DskipTests
 
@@ -36,8 +39,7 @@ jobs:
                 subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
             - name: Login to ACR
-              run: |
-                az acr login --name ${{ secrets.AZURE_REGISTRY_NAME }}
+              run: az acr login --name ${{ secrets.AZURE_REGISTRY_NAME }}
 
             - name: Build and push docker image
               uses: docker/build-push-action@v5
@@ -60,8 +62,7 @@ jobs:
               uses: azure/cli@v2
               with:
                 azcliversion: latest
-                inlineScript: |
-                    az webapp restart --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
+                inlineScript: az webapp restart --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
 
 
 
