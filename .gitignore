@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Terraform ###
+/terraform/**/.terraform
+terraform/envs/azure/terraform.tfvars
+terraform/envs/azure/terraform.tfstate
+terraform/envs/azure/terraform.tfstate.backup
