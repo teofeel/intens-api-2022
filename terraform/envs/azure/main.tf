@@ -42,7 +42,7 @@ module "web_app" {
 }
 
 resource "azurerm_role_assignment" "webapp_acr_pull" {
-  scope                = "/subscriptions/${var.subscription_id}/resourceGroups/${module.resource_group.resource_group_name}/providers/Microsoft.ContainerRegistry/registries/intenscontainer"
+  scope                = "/subscriptions/${var.subscription_id}/resourceGroups/${module.resource_group.resource_group_name}/providers/Microsoft.ContainerRegistry/registries/${var.container_name}"
   role_definition_name = "AcrPull"
   principal_id         = module.web_app.intens_web_app_id
 }
